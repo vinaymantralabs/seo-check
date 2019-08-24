@@ -89,9 +89,7 @@ const metaTagRules = [
     },
 ];
 
-const pageRules = [];
 
 module.exports = {
-    metaTagRules: metaTagRules,
-    pageRules: pageRules
+    metaTagRules: metaTagRules
 };

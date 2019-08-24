@@ -4,7 +4,7 @@ let cheerio = require('cheerio'),
 
 module.exports = {
     load: function(url, callback) {
-        if (url.indexOf('http://') < 0 && url.indexOf('https://') < 0) { // TODO: Turn this into its own function
+        if (url.indexOf('http://') < 0 && url.indexOf('https://') < 0) {
             url = 'http://' + url;
         }
 
@@ -31,22 +31,18 @@ module.exports = {
         page.alternate = $('link[rel=alternate]').attr('hreflang') || null;
         page.contentType = $('meta[http-equiv=content-type]').attr('content') || null;
         page.favicon = $('link[rel=icon]').attr('href') || null;
-        page.body = $('body').text().trim();
+        page.body = $('body').text().trim().replace('/\\n/gi', ' ').replace('/\\t/gi', ' ');
 
-        return page;
-    },
-
-    body: function(body) {
-        let $     = cheerio.load(body),
-            page  = {};
-
-        let h1s = 0;
+        // Heading signals
+        var h1s = 0;
         $('h1').each(function() {
             h1s++;
         });
+        page.heading1 = $('body h1:first-child').text().trim().replace('\n', '');
         page.totalHeadings = h1s;
 
-        let totalImgs       = 0,
+        // Accessibility signals
+        var totalImgs       = 0,
             accessibleImgs  = 0;
         $('img').each(function(index) {
             totalImgs++;
@@ -55,6 +51,7 @@ module.exports = {
             }
         });
         page.imgAccessibility = (accessibleImgs / totalImgs) * 100;
+
         return page;
     },
 
@@ -73,7 +70,7 @@ module.exports = {
         crawler.timeout             = opts.timeout || 1000;         // Milliseconds to wait for server to send headers
         crawler.downloadUnsupported = opts.unsupported || false;    // Save resources by only downloading files Simple Crawler can parse
                                                                     // The user agent string to provide - Be cool and don't trick people
-        crawler.userAgent           = opts.useragent || 'SEO Checker v1 (https://github.com/Clever-Labs/seo-checker)';
+        crawler.userAgent           = opts.useragent || 'SEO Checker';
 
         // Only fetch HTML! You should always set this option unless you have a good reason not to
         if (opts.htmlOnly === true) { // Being explicit about truthy values here
