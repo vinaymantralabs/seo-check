@@ -26,11 +26,24 @@ module.exports = {
         page.author = $('meta[name=author]').attr('content') || null;
         page.keywords = $('meta[name=keywords]').attr('content') || null;
 
+        page.canonical = $('link[rel=canonical]').attr('href') || null;
+        page.language = $('html[lang^=en]').attr('lang') || null;
+        page.alternate = $('link[rel=alternate]').attr('hreflang') || null;
+        page.contentType = $('meta[http-equiv=content-type]').attr('content') || null;
+        page.favicon = $('link[rel=icon]').attr('href') || null;
+        page.body = $('body').text().trim();
+
+        return page;
+    },
+
+    body: function(body) {
+        let $     = cheerio.load(body),
+            page  = {};
+
         let h1s = 0;
         $('h1').each(function() {
             h1s++;
         });
-        page.heading1 = $('body h1:first-child').text().trim().replace('\n', '');
         page.totalHeadings = h1s;
 
         let totalImgs       = 0,
