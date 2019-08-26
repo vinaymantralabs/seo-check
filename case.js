@@ -38,7 +38,7 @@ function checkPageContent(body, url, metaTagsArray) {
     }
 
     // image seo
-    if(metaTagsArray.imgAccessibility > 60){
+    if((metaTagsArray.imgAccessibility).toFixed(2) < 50){
         pageContentScore++;
         pageContentTotalScore++;
         pageContentResponseP.push(`There are ${(metaTagsArray.imgAccessibility).toFixed(2)}% images with alt attribute headings. OK`);

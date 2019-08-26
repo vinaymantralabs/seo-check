@@ -67,16 +67,16 @@ const metaTagRules = [
             },
         ]
     },
-    {
-        name: "contentType",
-        property: [
-            {
-                type: "required",
-                value: true,
-                score: 1,
-            },
-        ]
-    },
+    // {
+    //     name: "contentType",
+    //     property: [
+    //         {
+    //             type: "required",
+    //             value: true,
+    //             score: 1,
+    //         },
+    //     ]
+    // },
     {
         name: "favicon",
         property: [

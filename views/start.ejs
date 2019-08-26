@@ -144,7 +144,7 @@
 
                     <div class="seoBox" onclick="javascript:showSuggestion('seoBox<%= i %>');">
                         <div class="headBox clearfix">
-                            <h4 class="titleStr"><%= score.name %></h4>
+                            <h4 class="titleStr"><%= score.name %> ( <%= score.score %> / <%= score.totalScore %> )</h4>
                             <h4 class="solveMsg" data-original-title="Easy to solve" data-toggle="tooltip" data-placement="top">
                                 <i class="fa fa-gear fa-xs solveMsgBlue"></i>
                                 <i class="fa fa-gear fa-xs "></i>
@@ -152,7 +152,7 @@
                             </h4>
                         </div>
                         <div class="contentBox" id="seoBox<%= i %>">
-                            <div class="<% if(score.score > 0){ %>> passedBox <% } else { %> errorBox  <% } %>">
+                            <div class="<% if(score.score > 0){ %> passedBox <% } else { %> errorBox  <% } %>">
                                 <div class="msgBox bottom10">
                                     <%= score.value %>
                                     <br />
@@ -161,16 +161,19 @@
                                         <%= reason %> <br>
                                     <% }; %>
                                 </div>
-                                <div class="seoBox<%= i %> suggestionBox">
-                                    <% for(let reason of score.reasonNegative) { %>
-                                        <%= reason %> <br>
-                                    <% }; %>
-                                </div>
-                            </div>                    </div>
+                                <% if(score.reasonNegative.length > 0){ %>
+                                    <div class="seoBox<%= i %> suggestionBox">
+                                        <% for(let reason of score.reasonNegative) { %>
+                                            <%= reason %> <br>
+                                        <% }; %>
+                                    </div>
+                                <% } %>
+                            </div>
+                        </div>
                         <div class="questionBox" data-original-title="More Information" data-toggle="tooltip" data-placement="top">
                             <i class="fa fa-question-circle grayColor"></i>
-                        </div>	            </div>
-
+                        </div>
+                    </div>
                 <% i++; }); %>
 
             </div>

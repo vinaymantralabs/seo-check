@@ -10,7 +10,7 @@ async function check(url, resolve) {
     await crawler.load(url, async function (response) {
         // check for meta tag rules
         let metaTagsArray = await crawler.meta(response);
-        // console.log(metaTagsArray);
+        console.log(metaTagsArray);
         let body = metaTagsArray.body;
         for (const meta of rules.metaTagRules) {
             let reasonP = [];
